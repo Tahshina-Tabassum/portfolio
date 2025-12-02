@@ -1,0 +1,228 @@
+/* ============================================================= */
+/* ======================  PROJECTS PAGE  ====================== */
+/* ============================================================= */
+
+.projects-page {
+  min-height: 100vh;
+  background: #eed4b0;
+  padding: 50px 40px 100px;
+  position: relative;
+}
+
+.back-home-btn {
+  position: fixed;
+  top: 30px;
+  left: 50px;
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  font-size: 20px;
+  color: #553535;
+  text-decoration: none;
+  padding: 10px 25px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.back-home-btn:hover {
+  background: white;
+  color: #8d5524;
+}
+
+.projects-header {
+  text-align: center;
+  margin-bottom: 90px;
+}
+
+.projects-header h1 {
+  font-family: "Fredericka the Great", cursive;
+  font-size: 80px;
+  color: #553535;
+  margin-bottom: 20px;
+}
+
+.projects-header p {
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  color: #6d4c41;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 1fr;       /* ← THIS is the magic line */
+  gap: 50px;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: stretch;      /* makes all cards same height per row */
+}
+
+/* Optional: make it 1 column on mobile for better look */
+@media (max-width: 900px) {
+  .projects-grid {
+    grid-template-columns: 1fr;            /* 1 column on phones/tablets */
+    gap: 50px;
+  }
+}
+/* ============================================================= */
+/*                  PROJECT CARDS – PARCHMENT HOVER               */
+/* ============================================================= */
+
+.project-card {
+  position: relative;
+  background: #392003;
+  border: 8px solid #392003;
+  border-bottom: 5px solid #392003;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+.project-card:hover {
+  transform: translateY(-20px);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+}
+
+.project-link {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.project-thumb {
+  width: 100%;
+  height:fit-content; /* ← now it keeps the original ratio */
+  object-fit: contain;  /* shows full image, no cropping */
+  transition: transform 0.4s ease;
+}
+
+.project-card:hover .project-thumb {
+  transform: scale(1.05);
+}
+
+/* Parchment overlay – starts hidden below the image */
+.project-overlay {
+  position: absolute;
+  inset: 0;
+  background: #ffe5bd;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 40px;
+  box-sizing: border-box;
+  pointer-events: none;
+
+  /* Starts as a tiny circle in bottom-left corner */
+  clip-path: circle(0% at 0% 100%);
+  transition: clip-path 0.85s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.project-card:hover .project-overlay {
+  /* Fully covers the card – circle big enough to escape all edges */
+  clip-path: circle(150% at 0% 100%);
+  pointer-events: all;
+}
+
+.project-card:hover .project-overlay {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.overlay-content {
+  text-align: center;
+  color: #5c2a13;
+  transform: translateY(20px);
+  transition: transform 0.5s ease;
+}
+
+.project-card:hover .overlay-content {
+  transform: translateY(0);
+}
+
+.overlay-content h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.overlay-content p {
+  font-family: "Architects Daughter", cursive;
+  font-size: 18px;
+  line-height: 1.5;
+  max-width: 90%;
+  margin: 0 auto;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+/* Optional: tiny golden seal effect */
+.project-overlay::before {
+  content: "✦";
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 30px;
+  color: #d4af37;
+  opacity: 0;
+  transition: opacity 0.7s ease 0.3s;
+}
+
+.project-card:hover .project-overlay::before {
+  opacity: 0.8;
+}
+.project-info {
+  padding: 30px 25px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.project-info h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 26px;
+  color: #3e2723;
+  margin-bottom: 12px;
+}
+
+.project-info p {
+  font-family: "Architects Daughter", cursive;
+  font-size: 18px;
+  color: #5d4037;
+  margin-bottom: 22px;
+}
+
+.project-btn {
+  display: inline-block;
+  padding: 12px 30px;
+  background: #8d5524;
+  color: white;
+  font-family: "Playfair Display", serif;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.project-btn:hover {
+  background: #cf9a6e;
+  transform: scale(1.05);
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .projects-header h1 { font-size: 60px; }
+  .back-home-btn { position: static; margin: 20px auto; display: block; width: fit-content; }
+}

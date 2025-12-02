@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap" rel="stylesheet" />
+  <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&family=Permanent+Marker&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Schoolbell&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&family=Permanent+Marker&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+MX+Guides&family=Schoolbell&display=swap" rel="stylesheet"> -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&family=Permanent+Marker&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+MX+Guides&family=Protest+Revolution&family=Schoolbell&display=swap"
+    rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Fredericka+the+Great&family=Permanent+Marker&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+MX+Guides&family=Protest+Revolution&family=Schoolbell&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <nav>
+    <div class="nav-container">
+      <h1 class="text-logo">
+        <a href="#home">
+          <span class="logo-line1">Tahshina's</span><br>
+          <span class="logo-line2">Portfolio</span>
+        </a>
+      </h1>
+
+      <!-- Project button on the left (desktop only) -->
+      <a href="projects.html" class="custom-btn desktop-btn">LOOKING FOR PROJECTS?</a>
+
+      <!-- Centered links (desktop only) -->
+      <div class="center-links">
+        <a href="#home">HOME</a>
+        <a href="#about">ABOUT</a>
+        <!-- <a href="#skills">SKILLS</a> -->
+        <!-- <a href="#contact">CONTACT</a> -->
+        <a href="#resume">RESUME</a>
+      </div>
+
+      <!-- Mobile hamburger + menu (unchanged) -->
+      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+      <div class="nav-links" id="mainNavLinks">
+        <a href="#home">HOME</a>
+        <a href="#about">ABOUT</a>
+        <a href="#skills">SKILLS</a>
+        <a href="#contact">CONTACT</a>
+        <a href="#resume">RESUME</a>
+        <a href="projects.html" class="custom-btn">LOOKING FOR PROJECTS?</a>
+      </div>
+    </div>
+  </nav>
+  <section id="home">
+    <div class="home_container">
+      <div class="image_part">
+        <img src="/image/joe2.png" alt="joe" />
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="text_part">
+        <div class="quote-wrapper">
+          <h2><span id="typing-text"></span></h2>
+        </div>
+        <!-- Add this AFTER </div> of quote-wrapper, BEFORE <div class="author"> -->
+        <div class="intro-overlay">
+          <h2 class="intro-greeting">Hey, I'm Anusuya</h2>
+          <p class="intro-title">A UX Designer</p>
+          <p class="intro-description">
+            Welcome to my personal portfolio where creativity meets functionality.
+            I craft meaningful digital experiences that blend aesthetics with purpose.
+          </p>
+          <div class="intro-cta">
+            <a href="#about" class="cta-button">Explore My Work</a>
+          </div>
+        </div>
+        <div class="author">- VAN GOUGH</div>
+      </div>
+    </div>
+  </section>
+  </div>
+
+  <!-- ..........about section begins ..........-->
+  <section id="about" class="about-wrapper">
+    <div class="parchment">
+      <header>
+        <div class="title">
+          <h1>ABOUT ME</h1>
+        </div>
+
+        <div class="top-line">
+          <span>EST 2001</span>
+          <span>DHAKA, BANGLADESH</span>
+          <span>OCTOBER 20 2021</span>
+        </div>
+      </header>
+
+      <main class="content">
+        <!-- Left Column -->
+        <div class="column left">
+          <img src="/image/CVPIC.jpg" alt="Tahshina Tabassum" />
+          <div class="basic-info">
+            <h3>Tahshina Tabassum</h3>
+            <p><strong>Age:</strong> 24</p>
+            <p>
+              <strong>UX Designer & Frontend Developer</strong>
+            </p>
+          </div>
+        </div>
+
+        <!-- Middle Column -->
+        <div class="column middle">
+          <section class="bio">
+            <h2>WHO IS TAHSHINA</h2>
+            <p>
+              I’m Tahshina Tabassum — a UX designer with a background in
+              Information Technology and a passion for creativity. I enjoy
+              turning complex ideas into clean, meaningful user experiences by
+              blending logic with design. <span class="fade-bold animate-on-scroll">My love for art, literature, and
+                music
+                shapes how I work — with empathy, curiosity, and a storyteller’s
+                touch.</span> I believe every interface should feel clear, human, and
+              thoughtful.
+            </p>
+            <p>I specialize in Figma, HTML, CSS, Python, SQL, and C++,</p>
+          </section>
+        </div>
+        <!-- Fourth Column -->
+        <div class="education-container">
+          <h1 class="section-title">EDUCATIONAL BACKGROUND</h1>
+
+          <div class="education-entry">
+            <div class="institution-header-uni">
+              <div class="institution-tag-uni">
+                Institute of Information Technology,<br>
+                Jahangirnagar University
+              </div>
+              <div class="year-uni">2019-ongoing</div>
+            </div>
+            <div class="divider-line-uni"></div>
+            <p class="description-uni">
+              I earned my BSc in Information
+              Technology and am presently undertaking
+              my Master’s studies at the same institution.
+            </p>
+          </div>
+
+          <div class="education-entry">
+            <div class="institution-header-col">
+              <div class="institution-tag-col">
+                Kushtia Govt College, Kushtia
+              </div>
+              <div class="year-col">2017-2018</div>
+            </div>
+            <div class="divider-line-col"></div>
+            <p class="description-col">
+              I have completed my Higher Secondary Certificate (HSC) in the Science stream.
+            </p>
+          </div>
+
+          <div class="education-entry">
+            <div class="institution-header-sch">
+              <div class="institution-tag-sch">
+                Kushtia Zilla School, Kushtia
+              </div>
+              <div class="year-sch">2009-2017</div>
+            </div>
+            <div class="divider-line-sch"></div>
+            <p class="description-sch">
+              I completed my secondary education here, building a strong foundation in academics and extracurricular
+              activities.
+            </p>
+          </div>
+        </div>
+
+
+        <!-- Fifth Column -->
+        <div class="column-4">
+          <h3 class="column-title">SKILL INDEX</h3>
+
+          <!-- Paste your old skills markup exactly here -->
+          <div class="skills-grid">
+            <!-- All your skill cards / progress bars / icons go here -->
+            <!-- Example: -->
+            <div class="skill-item" data-percent="75%">
+              <span>Figma</span>
+              <div class="skill-bar-figma">
+                <div style="--target-width: 75%"></div>
+              </div>
+            </div>
+            <div class="skill-item" data-percent="80%">
+              <span>Html & Css</span>
+              <div class="skill-bar-html">
+                <div style="--target-width: 80%"></div>
+              </div>
+            </div>
+            <div class="skill-item" data-percent="65%">
+              <span>Python & database</span>
+              <div class="skill-bar-py">
+                <div style="--target-width: 65%"></div>
+              </div>
+            </div>
+            <div class="skill-item" data-percent="50%">
+              <span>C++</span>
+              <div class="skill-bar-c">
+                <div style="--target-width: 50%"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="column right">
+          <div class="quote-box">
+            <strong class="text animate-on-scroll">"IT’S NOT WHAT THE WORLD HOLDS FOR YOU,<br />IT IS WHAT YOU BRING
+              TO IT."</strong><br />
+            <em>- Lucy Montgomery</em>
+          </div>
+          <div class="hobbies-poster">
+            <div class="poster-header">
+              <h3>HOBBIES</h3>
+            </div>
+
+            <ul class="hobbies-list">
+              <li>Singing</li>
+              <li>Playing ukulele</li>
+              <li>Reading</li>
+              <li>Sketching</li>
+            </ul>
+
+          </div>
+        </div>
+        <!-- BOTTOM ROW - Add this after the closing </div> of column right -->
+        <div class="bottom-row-container">
+          <!-- Column 1: Soft Skills (Narrow) -->
+          <div class="soft-skills-column">
+            <h3>SOFT SKILLS</h3>
+            <ul class="soft-skills-list">
+              <li>Communication</li>
+              <li>Team Collaboration</li>
+              <li>Problem Solving</li>
+              <li>Event Management</li>
+              <li>Adaptability</li>
+              <li>Critical Thinking</li>
+              <li>Content writing</li>
+              <li>Public Speaking</li>
+            </ul>
+          </div>
+          <!-- Column 2: Fun Facts (Middle - ADD THIS BETWEEN soft-skills-column and contact-column) -->
+          <div class="facts-column">
+            <div class="scroll-container">
+              <img src="/image/scroll.png" class="scroll-bg" alt="Scroll Background" />
+              <img src="/image/crane.png" class="crane-decoration" alt="Origami Crane" />
+
+              <div class="scroll-content">
+                <h3 class="facts-title">DID<br>YOU<br>KNOW<br>?</h3>
+                <ul class="facts-list">
+                  <li>Tahshina has musical degree</li>
+                  <li>She is very enthusiastic about origami</li>
+                  <li>She lead a music club in uni</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Contact (Wide) -->
+          <div class="contact-column">
+            <img src="/image/col.png" class="contact-bg" alt="contact Background" />
+
+            <div class="contact-wrapper">
+              <div class="content-head">
+                <h2 class="c-heading">CONTACT</h2>
+              </div>
+              <div class="contact-right">
+                <p class="contact-to">To</p>
+                <p class="contact-name">Tahshina Tabassum</p>
+                <p class="contact-phone">phone: <a href="tel:+8801617300258">+8801617300258</a></p>
+                <p class="contact-email">Email: <a href="mailto:tahshinaanusuya@gmail.com">tahshinaanusuya@gmail.com</a>
+                </p>
+                <p class="contact-linked">
+                  Linked in: <a href="https://www.linkedin.com/in/tahshina-tabassum-4b050734b" target="_blank"
+                    rel="noopener noreferrer">
+                    www.linkedin.com/in/tahshina-tabassum-4b050734b</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      </main>
+    </div>
+  </section>
+
+  <!-- ....... about section ends,....... -->
+
+  <!-- resume section begins -->
+  <section id="resume">
+    <div class="resume-fullscreen">
+      <img src="/image/paper.png" alt="Torn Background" class="torn-bg" />
+      <div class="resume-content">
+        <iframe src="resume.pdf"></iframe>
+      </div>
+
+      <div class="btn-group">
+        <a href="resume.pdf" target="_blank" class="btn1">👁️ View in Tab</a>
+        <a href="resume.pdf" download="Your_Name_Resume.pdf" class="btn2">⬇️ Download PDF</a>
+      </div>
+    </div>
+    <div class="resume-extra">
+      <div class="resume-divider"></div>
+      <div class="resume-label">
+        <span>MY<br> RESUME</span>
+        <p class="paragraph">Explore a concise overview of my qualifications,
+          experience, <br>and the journey that shaped my professional path.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <footer>
+    <p>&copy; 2025 Tahshina Tabassum</p>
+  </footer>
+  <script src="/js/script.js"></script>
+</body>
+
+</html>
