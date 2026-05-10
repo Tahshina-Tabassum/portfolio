@@ -2,227 +2,359 @@
 /* ======================  PROJECTS PAGE  ====================== */
 /* ============================================================= */
 
-.projects-page {
-  min-height: 100vh;
-  background: #eed4b0;
-  padding: 50px 40px 100px;
-  position: relative;
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
 }
 
-.back-home-btn {
-  position: fixed;
-  top: 30px;
-  left: 50px;
-  font-family: "Playfair Display", serif;
-  font-size: 20px;
-  font-size: 20px;
-  color: #553535;
-  text-decoration: none;
-  padding: 10px 25px;
-  background: rgba(255,255,255,0.7);
-  border-radius: 10px;
-  backdrop-filter: blur(5px);
-  z-index: 1000;
-  transition: all 0.3s ease;
-}
-
-.back-home-btn:hover {
-  background: white;
-  color: #8d5524;
-}
-
-.projects-header {
-  text-align: center;
-  margin-bottom: 90px;
-}
-
-.projects-header h1 {
-  font-family: "Fredericka the Great", cursive;
-  font-size: 80px;
-  color: #553535;
-  margin-bottom: 20px;
-}
-
-.projects-header p {
-  font-family: "Playfair Display", serif;
-  font-size: 22px;
-  color: #6d4c41;
-  max-width: 700px;
-  margin: 0 auto;
+body {
+  font-family: 'Playfair Display', serif;
+  background: #000;
+  color: #f5ede0;
   line-height: 1.6;
 }
 
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-auto-rows: 1fr;       /* ← THIS is the magic line */
-  gap: 50px;
-  max-width: 1100px;
-  margin: 0 auto;
-  align-items: stretch;      /* makes all cards same height per row */
+/* Decorative border frame */
+body::before {
+  content: "";
+  position: fixed;
+  top: 20px; left: 20px; right: 20px; bottom: 10px;
+  border: 1px solid #2c2c2c;
+  border-bottom: none;
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 999;
 }
 
-/* Optional: make it 1 column on mobile for better look */
-@media (max-width: 900px) {
-  .projects-grid {
-    grid-template-columns: 1fr;            /* 1 column on phones/tablets */
-    gap: 50px;
+/* ============================================================= */
+/*                      PAGE LAYOUT                              */
+/* ============================================================= */
+
+.page-layout {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+/* ============================================================= */
+/*               LEFT PANEL — 38.2% (golden ratio)              */
+/* ============================================================= */
+
+.left-panel {
+  width: 38.2%;
+  flex-shrink: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 24px 50px 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.back-home-btn {
+  display: inline-block;
+  font-family: "Playfair Display", serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #888;
+  text-decoration: none;
+  padding: 8px 18px;
+  border: 1px solid #2c2c2c;
+  border-radius: 4px;
+  width: fit-content;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.back-home-btn:hover {
+  color: #FFB300;
+  border-color: #ff711366;
+}
+
+.panel-title {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 12px;
+}
+
+.panel-title h1 {
+  font-family: "Fredericka the Great", cursive;
+  font-size: clamp(38px, 3.8vw, 62px);
+  font-weight: 400;
+  color: #f5ede0;
+  line-height: 1.05;
+  letter-spacing: 2px;
+  text-align:right;
+  margin-left:200px;
+  
+  /* Initial state for animation */
+  opacity: 0;
+  transform: translateX(60px);
+  animation: emergeFromDivider 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.panel-title h1 .accent {
+   color: #ff7113;
+   }
+
+.panel-subtitle {
+  flex: 1;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 100px;
+  margin-left: 100px;
+  
+  /* Initial state for animation */
+  opacity: 0;
+  transform: translateX(60px);
+  animation: emergeFromDivider 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+}
+
+.subtitle-rule {
+  width: 40px;
+  height: 2px;
+  background: #ff7113;
+  margin-bottom: 14px;
+  border-radius: 2px;
+  margin-left: 270px;
+}
+
+.panel-subtitle p {
+  font-family: "Playfair Display", serif;
+  font-size: 14px;
+  color: #777;
+  line-height: 1.8;
+  font-style: italic;
+  max-width: 320px;
+  text-align: right;
+  
+}
+
+@keyframes emergeFromDivider {
+  0% {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
+
 /* ============================================================= */
-/*                  PROJECT CARDS – PARCHMENT HOVER               */
+/*                    GOLDEN DIVIDER                             */
+/* ============================================================= */
+
+.golden-divider {
+  width: 2px;
+  height: 100vh;
+  flex-shrink: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #ff711322 8%,
+    #ff7113bb 30%,
+    #FFB300   50%,
+    #ff7113bb 70%,
+    #ff711322 92%,
+    transparent 100%
+  );
+  position: relative;
+}
+
+.golden-divider::after {
+  content: "";
+  position: absolute;
+  top: 15%; left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 70%;
+  background: #ff711315;
+  filter: blur(8px);
+  border-radius: 5px;
+}
+
+/* ============================================================= */
+/*               RIGHT PANEL — 61.8% (golden ratio)             */
+/* ============================================================= */
+
+.right-panel {
+  flex: 1;
+  height: 100vh;
+  padding: 36px 50px 36px 32px;
+  overflow: hidden;
+}
+
+/* ============================================================= */
+/*                    6-CARD GRID (3 × 2)                        */
+/* ============================================================= */
+
+.projects-grid {
+  margin-top: 100px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 12px;
+  height: 80%;
+  width: 80%;
+}
+
+/* ============================================================= */
+/*                     PROJECT CARDS                             */
 /* ============================================================= */
 
 .project-card {
   position: relative;
-  background: #392003;
-  border: 8px solid #392003;
-  border-bottom: 5px solid #392003;
-  border-radius: 12px;
+  background: #0d0d0d;
+  border: 1px solid #2c2c2c;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-  transition: all 0.4s ease;
+  height: 100%;
   cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .project-card:hover {
-  transform: translateY(-20px);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+  border-color: #ff711355;
+  box-shadow: 0 8px 32px rgba(255, 113, 19, 0.2);
 }
+
+/* Orange top-edge glow */
+.project-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ff7113, transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 3;
+}
+.project-card:hover::before { opacity: 1; }
 
 .project-link {
   display: block;
-  position: relative;
   width: 100%;
   height: 100%;
   text-decoration: none;
   color: inherit;
+  position: relative;
 }
 
+/* ---- Thumbnail ---- */
 .project-thumb {
   width: 100%;
-  height:fit-content; /* ← now it keeps the original ratio */
-  object-fit: contain;  /* shows full image, no cropping */
-  transition: transform 0.4s ease;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  transition: transform 0.35s ease, filter 0.35s ease;
+  filter: brightness(0.9);
 }
 
 .project-card:hover .project-thumb {
-  transform: scale(1.05);
+  transform: scale(1.07);
+  filter: brightness(0.35);
 }
 
-/* Parchment overlay – starts hidden below the image */
+/* ---- Overlay: simple opacity fade (fast & smooth) ---- */
 .project-overlay {
   position: absolute;
   inset: 0;
-  background: #ffe5bd;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.88) 0%,
+    rgba(0, 0, 0, 0.5) 55%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding: 40px;
-  box-sizing: border-box;
+  padding: 24px 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
   pointer-events: none;
-
-  /* Starts as a tiny circle in bottom-left corner */
-  clip-path: circle(0% at 0% 100%);
-  transition: clip-path 0.85s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 .project-card:hover .project-overlay {
-  /* Fully covers the card – circle big enough to escape all edges */
-  clip-path: circle(150% at 0% 100%);
-  pointer-events: all;
-}
-
-.project-card:hover .project-overlay {
-  transform: translateY(0);
   opacity: 1;
   pointer-events: all;
 }
 
+/* Gold star */
+.project-overlay::before {
+  content: "✦";
+  position: absolute;
+  top: 14px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  color: #FFB300;
+  opacity: 0;
+  transition: opacity 0.25s ease 0.1s;
+}
+.project-card:hover .project-overlay::before { opacity: 1; }
+
+/* ---- Overlay text ---- */
 .overlay-content {
   text-align: center;
-  color: #5c2a13;
-  transform: translateY(20px);
-  transition: transform 0.5s ease;
+  transform: translateY(10px);
+  transition: transform 0.3s ease;
 }
 
-.project-card:hover .overlay-content {
-  transform: translateY(0);
-}
+.project-card:hover .overlay-content { transform: translateY(0); }
 
 .overlay-content h3 {
   font-family: "Playfair Display", serif;
-  font-size: 28px;
+  font-size: 18px;
   font-weight: 700;
-  margin-bottom: 12px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  color: #FFB300;
+  margin-bottom: 6px;
+  letter-spacing: 1px;
 }
 
 .overlay-content p {
   font-family: "Architects Daughter", cursive;
-  font-size: 18px;
+  font-size: 12px;
+  color: #f5ede0;
   line-height: 1.5;
   max-width: 90%;
   margin: 0 auto;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  opacity: 0.85;
 }
 
-/* Optional: tiny golden seal effect */
-.project-overlay::before {
-  content: "✦";
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 30px;
-  color: #d4af37;
-  opacity: 0;
-  transition: opacity 0.7s ease 0.3s;
+/* ============================================================= */
+/*                       RESPONSIVE                              */
+/* ============================================================= */
+
+@media (max-width: 1024px) {
+  html, body { overflow: auto; }
+  .page-layout { flex-direction: column; height: auto; }
+  .left-panel { width: 100%; height: auto; padding: 60px 30px 40px; }
+  .panel-title { flex: unset; padding: 30px 0 20px; }
+  .panel-title h1 { font-size: 58px; }
+  .panel-subtitle { padding-bottom: 10px; }
+  .golden-divider {
+    width: 100%; height: 2px;
+    background: linear-gradient(to right, transparent, #ff7113, transparent);
+  }
+  .golden-divider::after { display: none; }
+  .right-panel { height: auto; padding: 30px 24px 60px; }
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    height: auto;
+    gap: 14px;
+  }
+  .project-card { height: 240px; }
+  body::before { display: none; }
 }
 
-.project-card:hover .project-overlay::before {
-  opacity: 0.8;
-}
-.project-info {
-  padding: 30px 25px;
-  text-align: center;
-  position: relative;
-  z-index: 2;
-}
-
-.project-info h3 {
-  font-family: "Playfair Display", serif;
-  font-size: 26px;
-  color: #3e2723;
-  margin-bottom: 12px;
-}
-
-.project-info p {
-  font-family: "Architects Daughter", cursive;
-  font-size: 18px;
-  color: #5d4037;
-  margin-bottom: 22px;
-}
-
-.project-btn {
-  display: inline-block;
-  padding: 12px 30px;
-  background: #8d5524;
-  color: white;
-  font-family: "Playfair Display", serif;
-  font-weight: bold;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.project-btn:hover {
-  background: #cf9a6e;
-  transform: scale(1.05);
-}
-
-/* Responsive tweaks */
-@media (max-width: 768px) {
-  .projects-header h1 { font-size: 60px; }
-  .back-home-btn { position: static; margin: 20px auto; display: block; width: fit-content; }
+@media (max-width: 560px) {
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card { height: 260px; }
 }

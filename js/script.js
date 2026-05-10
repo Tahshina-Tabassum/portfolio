@@ -1,3 +1,9 @@
+// ============ EMAILJS CONFIG ============
+const EMAILJS_PUBLIC_KEY  = 'h5lBgBH6QWHJOFsrq';
+const EMAILJS_SERVICE_ID  = 'service_z2amelo';
+const EMAILJS_TEMPLATE_ID = 'template_da79ed4';
+emailjs.init(EMAILJS_PUBLIC_KEY);
+
 // ============ DOM CACHE ============
 const navEl = document.querySelector('nav');
 const bodyEl = document.body;
@@ -419,11 +425,13 @@ if (rcSection) {
 
 // Terminal send handler
 function handleSend() {
-  const name = document.getElementById('t-name').value.trim();
-  const email = document.getElementById('t-email').value.trim();
-  const message = document.getElementById('t-message').value.trim();
+  const name     = document.getElementById('t-name').value.trim();
+  const email    = document.getElementById('t-email').value.trim();
+  const message  = document.getElementById('t-message').value.trim();
   const response = document.getElementById('t-response');
+  const btn      = document.querySelector('.t-send-btn');
 
+  // — Validation —
   if (!name || !email || !message) {
     response.style.color = '#E24B4A';
     response.textContent = '> Error: all fields required. try again.';
@@ -439,24 +447,38 @@ function handleSend() {
     return;
   }
 
-  // Simulate sending
-  const btn = document.querySelector('.t-send-btn');
+  // — Sending state —
   btn.textContent = './sending...';
   btn.disabled = true;
+  response.style.color = '#febc2e';
+  response.textContent = '> Transmitting message...';
+  response.classList.add('show');
 
-  setTimeout(() => {
+  // — Real EmailJS send —
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+    from_name:  name,
+    from_email: email,
+    message:    message,
+  })
+  .then(() => {
     response.style.color = '#28c840';
     response.textContent = `> Message sent successfully. Talk soon, ${name}. ✓`;
-    response.classList.add('show');
-    btn.textContent = './send_message.sh';
+    btn.textContent = 'send_message';
     btn.disabled = false;
-
     // Clear fields
-    document.getElementById('t-name').value = '';
-    document.getElementById('t-email').value = '';
+    document.getElementById('t-name').value    = '';
+    document.getElementById('t-email').value   = '';
     document.getElementById('t-message').value = '';
-  }, 1500);
+  })
+  .catch((error) => {
+    response.style.color = '#E24B4A';
+    response.textContent = `> Error: failed to send. (${error.text || 'check console'})`;
+    btn.textContent = 'send_message';
+    btn.disabled = false;
+    console.error('EmailJS error:', error);
+  });
 }
+
 
 // Typing effect on terminal load
 const terminalLines = [
