@@ -1690,8 +1690,8 @@ section {
 
 .rc-btn-view,
 .rc-btn-download {
-  font-size: 12px;
-  padding: 8px 18px;
+  font-size: 10px;
+  padding: 7px 16px;
   border-radius: 6px;
   text-decoration: none;
   font-family: "Playfair Display", serif;
@@ -1711,7 +1711,7 @@ section {
 }
 
 .rc-btn-download {
-  background: #ff7113;
+  background: #fa924d5c;
   color: #fff;
   border: 1px solid #ff7113;
 }
