@@ -546,7 +546,7 @@ section {
   opacity: 0;  /* force hidden until JS reveals it */
   text-align: right;
   margin-top: 15px;
-  padding-right: 20px;
+  padding-right: 200px;
 
 }
   #typing-text::after {
@@ -587,7 +587,7 @@ section {
 
 
 .intro-overlay .intro-greeting {
-  font-family: "Fredericka the Great", serif;
+  font-family: "Architects Daughter", cursive;
   font-weight:400;
   font-size: 50px;
   color: white;
@@ -677,7 +677,8 @@ section {
   .top-line {
     display: flex;
     justify-content: space-between;
-    font-size: 14px;
+    font-size: 11px;
+    letter-spacing: 2px;
     font-family: 'Playfair Display', serif;
     padding: 0 5px;
     margin-bottom: 10px;
@@ -687,13 +688,13 @@ section {
   
   .about-wrapper header h1 {
     text-align: center;
-    font-size: 50px;
-    font-weight: 800;
+    font-size: 42px;
+    font-weight: 600;
     margin: 10px 0;
-    border-top: 2px solid #ff7113;
-  border-bottom: 2px solid #ff711344;
-   color: #f5ede0;
-    padding: 10px 0;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    color: #f5ede0;
+    padding: 14px 0;
     letter-spacing: 2px;
   }
   .title {
@@ -767,19 +768,19 @@ section {
   
   .basic-info {
     text-align:justify;
+    margin-left: 11px;
   }
   
-  .basic-info h3 {
-    font-size: 27px;
-    margin-left: 56px;
-    color: #f5ede0;
-  }
-  
-  .basic-info p {
-    margin-left: 55px;
-    font-size: 15px;
-    color: #aaa;
-  }
+.basic-info h3 {
+  font-size: 18px;
+  color: #f5ede0;
+  margin-bottom: 6px;
+}
+.basic-info p {
+  font-size: 12px;
+  color: #777;
+  line-height: 1.8;
+}
   
   /* Middle Column */
   .column.middle 
@@ -790,30 +791,28 @@ section {
     /* background-color: #fdfaf2; */
     padding: 2px;
   }
-  .column.middle h2 {
-    font-size: 23px;
-    font-weight: 800;
-    margin-bottom: 8px;
-    margin-top:-42px;
-    color: #f5ede0;
-    background-color: #ff7113; 
-  }
+.column.middle h2 {
+  background-color: transparent;
+  color: #f5ede0;
+  border-left: 3px solid #ff7113;
+  padding-left: 10px;
+  margin-top: 0;
+  font-size: 16px;
+  letter-spacing: 3px;
+}
   
   .column.middle p {
-    font-size: 15px;
+    font-size: 13px;
     text-align: justify;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
     margin-top: -2px;
     color: #bbb;
+    line-height: 1.9;
   }
-  .fade-bold {
+ .fade-bold {
+  color: #ff9944;
   font-weight: 400;
-  display: inline;
-  animation: fadeToBold 1s ease-in-out forwards;
-  animation-delay: 1s;
-  color: #A0522D;
-}
-
+  }
 @keyframes fadeToBold {
   0% {
     font-weight: 400;
@@ -828,164 +827,114 @@ section {
 .education-container {
   width: 220px;
   margin: 0 auto;
-   border: 1px solid #333;
-  height: 422px;
+  border: 1px solid #333333;
+  height: 409px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
   }
 
 .section-title {
-  /* font-family: 'Impact', sans-serif; */
-  font-size: 29.5px;
-  font-weight: 900;
-  margin-bottom: 40px;
-  text-align: left;
-   color: #fce2ccbd;
+  color: #ff7113;
+  font-size: 22px;
+  letter-spacing: 9px;
+  margin-bottom: 0;
+  border-bottom: 1px solid #ff711322;
+  padding-bottom: 8px;
+  flex-shrink: 0;
 }
 
 .education-entry {
-  margin-bottom: 28px;
-  position: relative;
+   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0.5px solid #222;
 }
 
 
 .education-entry:last-child {
-  margin-bottom: 0;
+  border-bottom: none;
 }
-/* Institution tags */
-.institution-tag-uni,
-.institution-tag-col,
-.institution-tag-sch {
-  background-color: #b740409a;
-  color: #f5ede0;
+
+
+.institution-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 6px;
 }
-/* Divider lines */
-.divider-line-uni,
-.divider-line-col,
-.divider-line-sch {
-  background-color: #333;
-}
-.year-uni,
-.year-col,
-.year-sch {
-  color: #888;
-}
-.description-uni,
-.description-col,
-.description-sch {
+
+.institution-tag {
+  background-color: #1a1a1a;
   color: #aaa;
-}
-.institution-header-uni {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 100%;
-  margin-bottom: 12px;
-  position: relative;
-}
-
-.institution-tag-uni {
-  /* background-color: #D8D0C5; */
-  font-size: 10px;
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 2px 4px;
   font-weight: bold;
-  /* color: #1a1a1a; */
-  max-width: 60%;
-}
-
-.year-uni {
-  font-size: 10px;
-  white-space: nowrap;
-  padding-top: 8px;
-  margin-left: auto;
-  align-self: flex-end;
-}
-
-.divider-line-uni {
-  width: 100%;
-  height: 1px;
-    margin-top: -12px;
-}
-
-.description-uni {
-  font-size: 11px;
-  line-height: 1.6;
-  text-align: justify;
-}
-
-.institution-header-col {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.institution-tag-col {
-  /* background-color: #D8D0C5; */
-  font-size: 10px;
-  font-weight: bold;
-  /* color: #1a1a1a; */
   max-width: 70%;
+  line-height: 1.4;
 }
 
-.year-col {
-  font-size: 10px;
+.edu-year {
+  color: #ff7113;
+  font-size: 9px;
   white-space: nowrap;
-  margin-left: auto;
-  align-self: flex-end;
-   padding-bottom: 0;
-
+  padding-top: 2px;
+  flex-shrink: 0;
 }
 
-.divider-line-col {
+.divider-line {
   width: 100%;
-  height: .5px;
-   text-align: justify;
+  height: 0.5px;
+  background: #333;
+  margin-bottom: 6px;
 }
 
-.description-col {
+.edu-description {
   font-size: 11px;
   line-height: 1.6;
   text-align: justify;
-}
-.institution-header-sch {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.institution-tag-sch {
-  /* background-color: #D8D0C5; */
-  font-size: 10px;
-  font-weight: bold;
-  /* color: #1a1a1a; */
-  max-width: 100%;
+  color: #777;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: max-height 0.5s ease, opacity 0.4s ease, transform 0.4s ease;
+  margin-top: 0;
 }
 
-.year-sch {
-  font-size: 10px;
-  white-space: nowrap;
+/* Trigger on hovering the header specifically */
+.education-entry:hover .edu-description {
+  max-height: 100px;
+  opacity: 1;
+  transform: translateY(0);
+  margin-top: 8px;
 }
 
-.divider-line-sch {
-  width: 100%;
-  height: .5px;
-  }
-
-.description-sch {
-  font-size: 11px;
-  line-height: 1.6;
-  text-align: justify;
-}
-
-  .column-4 h3{
-    font-size: 32px;
-    margin-top: -14px;
-    border-bottom: 20px;
-  }
-
-.column-4 .skill-item span {
+.column-4 h3 {
+  font-size: 13px;
+  letter-spacing: 3px;
   color: #f5ede0;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ff711322;
+  padding-bottom: 6px;
+  margin-top: 0;
+}
+
+/* 13. Skill item labels */
+.column-4 .skill-item span {
+  font-size: 11px;
+  color: #aaa;
+  letter-spacing: 1px;
 }
   .column-4 .skills-grid {
   display: grid;
   gap: 25px;
+  height: 370px;
   margin-top: 0px;
   border: 1px solid #333;         /* ← add this line only */
   padding: 20px 15px;                 /* optional – gives a little breathing room */
@@ -999,33 +948,13 @@ section {
   font-size: 17px;
 }
 
-.column-4 .skill-bar-figma {
-  height: 40px;
-  background: ffe5bd;
-  border-radius: 3px;
-  overflow: hidden;
-  border: 1px solid #62626223;
-}
-.column-4 .skill-bar-html {
-  height: 40px;
-  background: ffe5bd;
-  border-radius: 3px;
-  overflow: hidden;
-   border: 1px solid #62626223;
-}
-.column-4 .skill-bar-py{
-  height: 40px;
-  background: ffe5bd;
-  border-radius: 3px;
-  overflow: hidden;
-   border: 1px solid #62626223;
-}
+.column-4 .skill-bar-figma,
+.column-4 .skill-bar-html,
+.column-4 .skill-bar-py,
 .column-4 .skill-bar-c {
-  height: 40px;
-  background: ffe5bd;
-  border-radius: 3px;
-  overflow: hidden;
-   border: 1px solid #62626223;
+  height: 30px;
+  background: #1a1a1a;
+  border:none;
 }
 
 .column-4 .skill-bar-figma > div {
@@ -1072,12 +1001,12 @@ section {
   content: attr(data-percent);          /* we’ll add data-percent in HTML */
   position: absolute;
   right: 0;
-  top: 15%;
+  top: 30%;
   transform: translateY(-50%);
   font-family: "Playfair Display", serif;
-  font-size: 15px; 
+  font-size: 12px; 
   font-weight: bold;
-  color:  #a55656;
+  color: #555;
 }
   
 /* Right Column */
@@ -1088,21 +1017,21 @@ section {
   }
   
   .quote-box {
-    width: 200px;
+    width: 180px;
     margin: 2rem auto;
-    padding: 1.5rem;
+    padding: 1.7rem;
     background-color: #1A1A1A;
     font-family: 'Georgia', serif;
     text-align: center;
-    color: #fff5e7;
+    color: #ffefe7;
     margin-left: -10px;
     margin-top: -1px;
-    border:1px solid rgb(255, 255, 255);
+    border:1px solid rgba(178, 69, 19, 0.185);
   }
   
   .quote-box strong {
     display: block;
-    font-size:15px;
+    font-size:12px;
     font-weight: 200;
     line-height: 1.6;
     margin-top: 5px;
@@ -1111,7 +1040,7 @@ section {
   .quote-box em {
     display: block;
     font-size: 13px;
-    color: #ffffff;
+    color: #ef5d02;
     margin-top:5px;
   }
   .text {
@@ -1137,12 +1066,12 @@ section {
 
   
   .hobbies-poster {
-  width: 196px;
+  width: 183px;
   margin: -20px auto 0 auto;
   margin-left: -10px;     /* ← 80px top gap from quote card */
-  background: #fffaf0;
-  border: 14px solid #FFB300;
-  border-top: 30px solid #FFB300;
+  background: #ffe9be;
+  border: 12px solid #cd9f6a;
+  border-top: 30px solid #cd9f6a;
   border-radius: 8px;
   /* box-shadow: 0 20px 40px rgba(0,0,0,0.25); */
   padding: 15px 30px 15px;
@@ -1151,16 +1080,36 @@ section {
 }
 
 /* Rest of the CSS exactly the same as before */
-.poster-header h3 { position: absolute; top: -28px; 
-  left: 50%; transform: translateX(-50%);
-   background: #FFB300; color: #553535; 
-   padding: 8px 30px; font-size: 12px;
+.poster-header h3 { position: absolute; 
+  top: -28px; 
+  left: 50%; 
+  transform: translateX(-50%);
+   background: #cd9f6a; 
+   color: #241b1b; 
+   padding: 8px 30px; 
+   font-size:11px;
   font-weight: bold; 
   letter-spacing: 4px; 
   border-radius: 4px; }
-.hobbies-list { list-style:none; padding: 0; margin: 0; font-size: 14px; line-height: 2; color: #553535; }
-.hobbies-list li { position: relative; padding-left:px; }
-.hobbies-list li::before { content: "✦"; position: absolute; margin-left:-20px;margin-top: 5px; color: #8d5524; font-size: 10px; }
+.hobbies-list { 
+  list-style:none; 
+  padding: 0; 
+  margin: 0; 
+  font-size: 11px; 
+  line-height: 2.7; 
+  color: #553535; }
+
+.hobbies-list li {
+  position: relative; 
+  padding-left:px; }
+
+.hobbies-list li::before 
+{ content: "✦"; 
+  position: absolute; 
+  margin-left:-20px;
+  margin-top: 5px; 
+  color: #8d5524; 
+  font-size: 10px; }
 
   
 
@@ -1199,15 +1148,6 @@ section {
   transform: scale(1.1);
   transition: all 0.3s ease;
   cursor: pointer;
-}
-
-/* Education entries lift up on hover */
-.education-entry:hover {
-  transition: all 0.3s ease;
-  cursor: pointer;
-  background-color: #1a1a1a;
-  border: 1px solid #ff711333;
-  border-style: solid;
 }
 
 
