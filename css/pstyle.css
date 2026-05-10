@@ -94,8 +94,8 @@ body::before {
   
   /* Initial state for animation */
   opacity: 0;
-  transform: translateX(60px);
-  animation: emergeFromDivider 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform: translateX(100px);
+  animation: emergeFromDivider 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .panel-title h1 .accent {
@@ -111,8 +111,8 @@ body::before {
   
   /* Initial state for animation */
   opacity: 0;
-  transform: translateX(60px);
-  animation: emergeFromDivider 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+  transform: translateX(100px);
+  animation: emergeFromDivider 2s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
 }
 
 .subtitle-rule {
@@ -165,6 +165,24 @@ body::before {
     transparent 100%
   );
   position: relative;
+  transform-origin: center;
+  transform: scaleY(0);
+  opacity: 0;
+  animation: elongateDivider 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes elongateDivider {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
 }
 
 .golden-divider::after {
@@ -341,6 +359,9 @@ body::before {
   .golden-divider {
     width: 100%; height: 2px;
     background: linear-gradient(to right, transparent, #ff7113, transparent);
+    transform-origin: center;
+    transform: scaleX(0);
+    animation: elongateDividerMobile 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .golden-divider::after { display: none; }
   .right-panel { height: auto; padding: 30px 24px 60px; }
@@ -357,4 +378,18 @@ body::before {
 @media (max-width: 560px) {
   .projects-grid { grid-template-columns: 1fr; }
   .project-card { height: 260px; }
+}
+
+@keyframes elongateDividerMobile {
+  0% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
 }
