@@ -1,400 +1,483 @@
+// ============ DOM CACHE ============
+const navEl = document.querySelector('nav');
+const bodyEl = document.body;
+const homeSection = document.getElementById('home');
+const introOverlay = document.querySelector('.intro-overlay');
+const quoteH2 = document.querySelector('.text_part h2');
+const quoteWrapper = document.querySelector('.quote-wrapper');
+const imgPrimary = document.querySelector('.img-primary');
+const imgSecondary = document.querySelector('.img-secondary');
+const dividerEl = document.querySelector('.divider');
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('.center-links a');
+const authorEl = document.querySelector(".author");
+if (authorEl) {
+  authorEl.style.opacity = '0';
+  authorEl.style.transition = 'none';  /* keep this — prevents any accidental fade on load */
+}
+
+// ============ MENU TOGGLE ============
 function toggleMenu() {
-    const navLinks = document.getElementById("mainNavLinks");
-    navLinks.classList.toggle("active");
-  }
-  
-  // select all <a> inside the container
-  document.querySelectorAll("#mainNavLinks a").forEach(link => {
-    link.addEventListener("click", () => {
-      // remove “active” when any link is clicked
-      document.getElementById("mainNavLinks").classList.remove("active");
-    });
+  document.getElementById("mainNavLinks").classList.toggle("active");
+}
+
+document.querySelectorAll("#mainNavLinks a").forEach(link => {
+  link.addEventListener("click", () => {
+    document.getElementById("mainNavLinks").classList.remove("active");
   });
-  
-  
-  const text = '" What is done with love, is done well ."';
-  const typingText = document.getElementById("typing-text");
-  const author = document.querySelector(".author");
-  
-  let index = 0;
-  let typingSpeed = 70; // faster typing
-  let paused = false;
-  
-  function type() {
-    if (index < text.length) {
-      const currentChar = text.charAt(index);
-      typingText.textContent += currentChar;
-  
-      // Check for comma pause
-      if (currentChar === ',') {
-        paused = true;
-        setTimeout(() => {
-          paused = false;
-          index++;
-          type(); // continue after pause
-        }, 900); // pause duration at comma
-        return;
+});
+
+// ============ TYPING ANIMATION ============
+const words = [
+  { text: '" What is done with ', color: '#f5ede0' },
+  { text: 'love', color: '#E8B84B' },
+  { text: ', is done well ."', color: '#f5ede0' }
+];
+
+const fullText = words.map(w => w.text).join('');
+const typingText = document.getElementById("typing-text");
+let index = 0;
+const typingSpeed = 70;
+
+function type() {
+  if (index < fullText.length) {
+    const currentChar = fullText.charAt(index);
+    const typed = fullText.substring(0, index + 1);
+    let built = '';
+    let charCount = 0;
+
+    for (let w of words) {
+      const wordEnd = charCount + w.text.length;
+      if (typed.length > charCount) {
+        const slice = typed.substring(charCount, wordEnd);
+        if (slice) built += `<span style="color:${w.color}">${slice}</span>`;
       }
-  
-      index++;
-      setTimeout(type, typingSpeed);
-    } else {
-      // Show the author once typing is complete
-      author.style.opacity = "1";
-      author.style.transition = "opacity 1.5s ease-in-out";
+      charCount = wordEnd;
     }
-  }
-  
-  window.onload = type;
-  
-  let skillAnimationStarted = false;
 
-  function animateSkillFills() {
-    const bars = [
-      { selector: ".fill-figma", width: "75%" },
-      { selector: ".fill-html", width: "80%" },
-      { selector: ".fill-c", width: "50%" },
-      { selector: ".fill-sql", width: "65%" }
-    ];
+    typingText.innerHTML = built;
 
-    bars.forEach((bar, i) => {
-      const el = document.querySelector(bar.selector);
-      el.style.width = "0%"; // Reset to 0 initially
-
-      setTimeout(() => {
-        el.style.width = bar.width;
-      }, i * 1000); // Delay each bar
-    });
-  }
-
-  window.addEventListener("scroll", () => {
-    const section = document.getElementById("skills");
-    const position = section.getBoundingClientRect().top;
-
-    if (!skillAnimationStarted && position < window.innerHeight - 150) {
-      animateSkillFills();
-      skillAnimationStarted = true;
+    if (currentChar === ',') {
+      setTimeout(() => { index++; type(); }, 900);
+      return;
     }
-  });
 
- 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
+    index++;
+    setTimeout(type, typingSpeed);
+} else {
+  const scrolled = window.scrollY;
+  const sectionHeight = homeSection ? homeSection.offsetHeight : 0;
+  const triggerStart = sectionHeight * 0.15;
+  
+  if (!transformDone && scrolled < triggerStart && authorEl) {
+    authorEl.style.transition = 'opacity 1.5s ease-in-out';
+    authorEl.style.opacity = '1';
+  }
+}
+}
 
-        // Fading text
-        if (el.classList.contains('fade-bold')) {
-          el.classList.remove('fade-bold');
-          void el.offsetWidth;
-          el.classList.add('fade-bold');
+window.onload = type;
 
-          // Back-block animation starts after fade-bold
-          setTimeout(() => {
-            document.querySelectorAll('.back-block.animate-on-scroll').forEach(b => {
-              b.classList.add('start-animation');
-            });
-          }, 2200);
-
-          // Red animation starts after back-block
-          setTimeout(() => {
-            document.querySelectorAll('.red.animate-on-scroll').forEach(r => {
-              r.classList.add('start-animation');
-            });
-          }, 4200);
-        }
-        // After red animation, start quote animation
-setTimeout(() => {
-  document.querySelectorAll('.text.animate-on-scroll').forEach(q => {
-    q.classList.add('start-animation');
-  });
-}, 6200); // 2.2s (bold) + 2.2s (back) + 1.2s (red) + buffer
-
-        observer.unobserve(el);
-      }
-    });
-  }, {
-    threshold: 0.3
-  });
-// Attach observer to elements that should animate on scroll
-document.querySelectorAll('.fade-bold, .back-block.animate-on-scroll, .red.animate-on-scroll, .text.animate-on-scroll')
-  .forEach(el => observer.observe(el));
-
- 
-
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const contactSection = document.getElementById("contact");
-    const decorImages = document.querySelectorAll(".contact-decor");
-
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            // Section is in view → show images
-            decorImages.forEach(img => img.classList.add("show"));
-          } else {
-            // Section is out of view → hide images
-            decorImages.forEach(img => img.classList.remove("show"));
-          }
-        });
-      },
-      {
-        threshold: 0.3
-      }
-    );
-
-    observer.observe(contactSection);
-  });
-
-
+// ============ ALL OBSERVERS ON DOMCONTENTLOADED ============
 document.addEventListener("DOMContentLoaded", () => {
-  const resumeSection = document.getElementById("resume");
 
-  const observer = new IntersectionObserver(entries => {
+  // Fade bold text observer
+  const textObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        resumeSection.classList.add("active");
-      } else {
-        resumeSection.classList.remove("active");
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+
+      if (el.classList.contains('fade-bold')) {
+        el.classList.remove('fade-bold');
+        void el.offsetWidth;
+        el.classList.add('fade-bold');
+        setTimeout(() => {
+          document.querySelectorAll('.back-block.animate-on-scroll').forEach(b => b.classList.add('start-animation'));
+        }, 2200);
+        setTimeout(() => {
+          document.querySelectorAll('.red.animate-on-scroll').forEach(r => r.classList.add('start-animation'));
+        }, 4200);
       }
+      setTimeout(() => {
+        document.querySelectorAll('.text.animate-on-scroll').forEach(q => q.classList.add('start-animation'));
+      }, 6200);
+
+      textObserver.unobserve(el);
     });
   }, { threshold: 0.3 });
 
-  observer.observe(resumeSection);
-});
+  document.querySelectorAll('.fade-bold, .back-block.animate-on-scroll, .red.animate-on-scroll, .text.animate-on-scroll')
+    .forEach(el => textObserver.observe(el));
 
-window.addEventListener('scroll', () => {
-  const nav = document.querySelector('nav');
-  const body = document.body;
-  
-  if (window.scrollY > 50) {
-    nav.classList.add('scrolled');
-    body.classList.add('scrolled'); // NEW LINE
-  } else {
-    nav.classList.remove('scrolled');
-    body.classList.remove('scrolled'); // NEW LINE
-  }
-});
-
-window.addEventListener('scroll', () => {
-  const nav = document.querySelector('nav');
-  // Change this number if your dark section starts higher/lower
-  if (window.scrollY < 600) {                    
-    nav.classList.add('dark-glass');    // light homepage → dark glass
-  } else {
-    nav.classList.remove('dark-glass'); // dark sections → light glass
-  }
-});
-
-// Staggered column animation for About section
-document.addEventListener("DOMContentLoaded", () => {
-  const aboutSection = document.querySelector(".about-wrapper");
-
-  const aboutObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          aboutSection.classList.add("animate-in");
-        }
+  // Contact decor observer
+  const contactSection = document.getElementById("contact");
+  if (contactSection) {
+    const decorImages = document.querySelectorAll(".contact-decor");
+    new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        decorImages.forEach(img => img.classList.toggle("show", entry.isIntersecting));
       });
-    },
-    { threshold: 0.2 }
-  );
+    }, { threshold: 0.3 }).observe(contactSection);
+  }
 
-  aboutObserver.observe(aboutSection);
-});
-
-// Individual element scroll animation (repeats on scroll)
-document.addEventListener("DOMContentLoaded", () => {
-  const animatedElements = document.querySelectorAll(
-    ".column.left, .column.middle, .education-container, .column-4, .column.right, .soft-skills-column, .facts-column, .contact-column"
-  );
-
-  const elementObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("in-view");
-        } else {
-          entry.target.classList.remove("in-view");
-        }
+  // Resume observer
+  const resumeSection = document.getElementById("resume");
+  if (resumeSection) {
+    new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        resumeSection.classList.toggle("active", entry.isIntersecting);
       });
-    },
-    { threshold: 0.2 }
-  );
-
-  animatedElements.forEach((el) => elementObserver.observe(el));
-});
-
-document.querySelectorAll('.center-links a').forEach(link => {
-  const originalText = link.textContent;
-  let typingInterval = null;
-  let isTyping = false;
-
-  link.addEventListener('mouseenter', () => {
-    if (isTyping) return;  // prevent starting another interval
-    isTyping = true;
-    let i = 0;
-    link.textContent = '';
-
-    typingInterval = setInterval(() => {
-      link.textContent += originalText[i];
-      i++;
-      if (i >= originalText.length) {
-        clearInterval(typingInterval);
-        typingInterval = null;
-        isTyping = false;
-      }
-    }, 100); // typing speed
-  });
-
-  link.addEventListener('mouseleave', () => {
-    if (typingInterval) {
-      clearInterval(typingInterval);
-      typingInterval = null;
-      isTyping = false;
-    }
-    link.textContent = originalText; // reset text
-  });
-});
-
-
-// NEW: Glassmorphism effect based on sections - ADDED
-window.addEventListener('scroll', () => {
-  const nav = document.querySelector('nav');
-  const sections = document.querySelectorAll('section');
-  
-  if (window.scrollY < 100) {
-    nav.classList.remove('glass-home', 'glass-about', 'glass-resume');
-    return;
+    }, { threshold: 0.3 }).observe(resumeSection);
   }
-  
-  let currentSection = null;
-  let maxVisibleArea = 0;
-  
-  sections.forEach(section => {
-    const rect = section.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    
-    // Calculate how much of the section is visible
-    const visibleTop = Math.max(0, rect.top);
-    const visibleBottom = Math.min(viewportHeight, rect.bottom);
-    const visibleArea = Math.max(0, visibleBottom - visibleTop);
-    
-    // The section with the most visible area is the current one
-    if (visibleArea > maxVisibleArea) {
-      maxVisibleArea = visibleArea;
-      currentSection = section.id;
-    }
-  });
-  
-  nav.classList.remove('glass-home', 'glass-about', 'glass-resume');
-  
-  if (currentSection === 'home') {
-    nav.classList.add('glass-home');
-  } else if (currentSection === 'about') {
-    nav.classList.add('glass-about');
-  } else if (currentSection === 'resume') {
-    nav.classList.add('glass-resume');
-  }
-});
 
-// Transformation charm effect on scroll - ADD THIS
-// Transformation charm effect on scroll with smooth reverse
-let transformTriggered = false;
-
-window.addEventListener('scroll', () => {
-  const homeContainer = document.querySelector('.home_container');
-  const scrollPosition = window.scrollY;
-  const triggerPoint = 1;
-
-  if (scrollPosition > triggerPoint) {
-    if (!transformTriggered) {
-      homeContainer.classList.add('transform');
-      transformTriggered = true;
-    }
-  } else {
-    if (transformTriggered) {
-      homeContainer.classList.remove('transform');
-      transformTriggered = false;
-    }
-  }
-});
-
-// Show/hide about section on scroll
-document.addEventListener("DOMContentLoaded", () => {
+  // About wrapper visibility observer
   const aboutSection = document.querySelector(".about-wrapper");
-
-  const aboutVisibilityObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
+  if (aboutSection) {
+    new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
-          aboutSection.classList.add("in-view");
+          aboutSection.classList.add("animate-in", "in-view");
         } else {
           aboutSection.classList.remove("in-view");
         }
       });
-    },
-    { 
-      threshold: 0.1,  // Triggers when 10% of section is visible
-      rootMargin: "-100px 0px -100px 0px"  // Only show when properly scrolled to
-    }
-  );
+    }, { threshold: 0.1, rootMargin: "-100px 0px -100px 0px" }).observe(aboutSection);
+  }
 
-  aboutVisibilityObserver.observe(aboutSection);
-});
-// Skill bars animation when about section is in view - REPEATS EVERY TIME
-document.addEventListener("DOMContentLoaded", () => {
-  const skillBars = document.querySelectorAll('.column-4 .skill-bar-figma > div, .column-4 .skill-bar-html > div, .column-4 .skill-bar-py > div, .column-4 .skill-bar-c > div');
-  
-  const skillObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        const figmaBar = document.querySelector('.column-4 .skill-bar-figma > div');
-        const htmlBar = document.querySelector('.column-4 .skill-bar-html > div');
-        const pyBar = document.querySelector('.column-4 .skill-bar-py > div');
-        const cBar = document.querySelector('.column-4 .skill-bar-c > div');
-        
-        if (entry.isIntersecting) {
-          // Trigger skill bar animations
-          if (figmaBar) {
-            figmaBar.style.animation = 'none';
-            void figmaBar.offsetWidth; // Force reflow
-            figmaBar.style.animation = 'fillBar 2s ease-out forwards 0.3s';
-          }
-          if (htmlBar) {
-            htmlBar.style.animation = 'none';
-            void htmlBar.offsetWidth;
-            htmlBar.style.animation = 'fillBar 2s ease-out forwards 0.6s';
-          }
-          if (pyBar) {
-            pyBar.style.animation = 'none';
-            void pyBar.offsetWidth;
-            pyBar.style.animation = 'fillBar 2s ease-out forwards 0.9s';
-          }
-          if (cBar) {
-            cBar.style.animation = 'none';
-            void cBar.offsetWidth;
-            cBar.style.animation = 'fillBar 2s ease-out forwards 1.2s';
-          }
-        } else {
-          // Reset bars when out of view
-          if (figmaBar) figmaBar.style.width = '0%';
-          if (htmlBar) htmlBar.style.width = '0%';
-          if (pyBar) pyBar.style.width = '0%';
-          if (cBar) cBar.style.width = '0%';
-        }
-      });
-    },
-    { 
-      threshold: 0.3
-    }
+  // Column animations observer
+  const animatedElements = document.querySelectorAll(
+    ".column.left, .column.middle, .education-container, .column-4, .column.right, .soft-skills-column, .facts-column, .contact-column"
   );
+  const columnObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle("in-view", entry.isIntersecting);
+    });
+  }, { threshold: 0.2 });
+  animatedElements.forEach(el => columnObserver.observe(el));
 
-  // Observe the skills column
+  // Skill bars observer
   const skillsColumn = document.querySelector('.column-4');
   if (skillsColumn) {
-    skillObserver.observe(skillsColumn);
+    new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const bars = [
+          { el: document.querySelector('.column-4 .skill-bar-figma > div'), delay: '0.3s' },
+          { el: document.querySelector('.column-4 .skill-bar-html > div'), delay: '0.6s' },
+          { el: document.querySelector('.column-4 .skill-bar-py > div'), delay: '0.9s' },
+          { el: document.querySelector('.column-4 .skill-bar-c > div'), delay: '1.2s' },
+        ];
+        bars.forEach(({ el, delay }) => {
+          if (!el) return;
+          if (entry.isIntersecting) {
+            el.style.animation = 'none';
+            void el.offsetWidth;
+            el.style.animation = `fillBar 2s ease-out forwards ${delay}`;
+          } else {
+            el.style.width = '0%';
+          }
+        });
+      });
+    }, { threshold: 0.3 }).observe(skillsColumn);
   }
+
+  // Set HOME nav link active on load
+  const homeLink = document.querySelector('.center-links a[href="#home"]');
+  if (homeLink) homeLink.classList.add('active');
+
 });
+
+// ============ SINGLE UNIFIED SCROLL LISTENER ============
+let transformDone = false;
+let rafPending = false;
+
+window.addEventListener('scroll', () => {
+  if (rafPending) return;
+  rafPending = true;
+
+  requestAnimationFrame(() => {
+    rafPending = false;
+    const scrolled = window.scrollY;
+
+    // ---- NAV scrolled class ----
+    navEl.classList.toggle('scrolled', scrolled > 50);
+    bodyEl.classList.toggle('scrolled', scrolled > 50);
+    navEl.classList.toggle('dark-glass', scrolled < 600);
+
+    // ---- NAV glassmorphism ----
+    if (scrolled >= 100) {
+      let currentSection = null;
+      let maxArea = 0;
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        const visible = Math.max(0, Math.min(window.innerHeight, rect.bottom) - Math.max(0, rect.top));
+        if (visible > maxArea) { maxArea = visible; currentSection = section.id; }
+      });
+      navEl.classList.remove('glass-home', 'glass-about', 'glass-resume');
+      if (currentSection === 'home') navEl.classList.add('glass-home');
+      else if (currentSection === 'about') navEl.classList.add('glass-about');
+      else if (currentSection === 'resume') navEl.classList.add('glass-resume');
+    } else {
+      navEl.classList.remove('glass-home', 'glass-about', 'glass-resume');
+    }
+
+    // ---- ACTIVE NAV LINK ----
+    let activeSection = 'home';
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+        activeSection = section.getAttribute('id');
+      }
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === `#${activeSection}`);
+    });
+
+    // ---- HOME TRANSITION ----
+    if (!transformDone && homeSection) {
+      const sectionHeight = homeSection.offsetHeight;
+      const start = sectionHeight * 0.15;
+      const end = sectionHeight * 0.55;
+      const progress = Math.min(1, Math.max(0, (scrolled - start) / (end - start)));
+
+      // Quote fades out completely
+      if (quoteH2) quoteH2.style.opacity = `${Math.max(0, 1 - progress *4)}`;
+      if (authorEl) authorEl.style.opacity = `${Math.max(0, 1 - progress * 10)}`;
+
+      // Divider shrinks
+      if (dividerEl) dividerEl.style.height = `${500 - progress * 280}px`;
+
+      // Images crossfade in first 60%
+      const imgP = Math.min(1, progress / 0.4);
+      if (imgPrimary) imgPrimary.style.opacity = `${1 - imgP}`;
+      if (imgSecondary) {
+        imgSecondary.style.opacity = `${imgP}`;
+        imgSecondary.style.maxWidth = `${400 + imgP * 300}px`;
+        imgSecondary.style.height = imgP > 0 ? `${30 + imgP * 55}vh` : 'auto';
+        imgSecondary.style.objectFit = 'cover';
+        imgSecondary.style.objectPosition = 'center';
+        imgSecondary.style.transform = `translateX(${-imgP * 150}px)`;
+      }
+
+      // Intro floats up in second half
+      const introP = Math.min(1, Math.max(0, (progress - 0.4) / 0.6));
+      if (introOverlay) {
+        if (introP > 0) {
+          introOverlay.style.visibility = 'visible';
+          introOverlay.style.height = 'auto';
+          introOverlay.style.overflow = 'visible';
+          introOverlay.style.opacity = `${introP}`;
+          introOverlay.style.transform = `translateY(${60 - introP * 60}px)`;
+          introOverlay.style.pointerEvents = introP > 0.8 ? 'all' : 'none';
+        } else {
+          introOverlay.style.visibility = 'hidden';
+          introOverlay.style.height = '0';
+          introOverlay.style.overflow = 'hidden';
+          introOverlay.style.opacity = '0';
+          introOverlay.style.transform = 'translateY(60px)';
+          introOverlay.style.pointerEvents = 'none';
+        }
+      }
+
+      // Lock at progress = 1
+      if (progress >= 1) {
+        transformDone = true;
+
+        if (quoteWrapper) quoteWrapper.style.display = 'none';
+        if (authorEl) authorEl.style.display = 'none';
+        if (dividerEl) dividerEl.style.height = '220px';
+        if (imgPrimary) imgPrimary.style.opacity = '0';
+        if (imgSecondary) {
+          imgSecondary.style.opacity = '1';
+          imgSecondary.style.maxWidth = '700px';
+          imgSecondary.style.height = '85vh';
+          imgSecondary.style.objectFit = 'cover';
+          imgSecondary.style.objectPosition = 'center';
+          imgSecondary.style.transform = 'translateX(-150px)'; 
+        }
+
+        if (introOverlay) {
+          introOverlay.style.visibility = 'visible';
+          introOverlay.style.height = 'auto';
+          introOverlay.style.overflow = 'visible';
+          introOverlay.style.opacity = '1';
+          introOverlay.style.transform = 'translateY(0)';
+          introOverlay.style.pointerEvents = 'all';
+        }
+      }
+    }
+  });
+}, { passive: true });
+// Beyond section observer
+const beyondSection = document.querySelector(".beyond-wrapper");
+if (beyondSection) {
+  new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        beyondSection.classList.add("in-view");
+      } else {
+        beyondSection.classList.remove("in-view");
+      }
+    });
+  }, { threshold: 0.1 }).observe(beyondSection);
+}
+
+// Drawing gallery — infinite seamless loop
+const slidesContainer = document.querySelector('.gallery-slides');
+const originalSlides = document.querySelectorAll('.gallery-slide');
+const dots = document.querySelectorAll('.gallery-dot');
+
+if (slidesContainer && originalSlides.length > 0) {
+  const total = originalSlides.length;
+  let current = 0; // tracks the "real" index (0 to total-1)
+  let isTransitioning = false;
+
+  // 1. Clone first and last slides and insert them
+  const firstClone = originalSlides[0].cloneNode(true);
+  const lastClone = originalSlides[total - 1].cloneNode(true);
+
+  firstClone.classList.add('clone');
+  lastClone.classList.add('clone');
+
+  // Append clone of first at the end, prepend clone of last at the start
+  slidesContainer.appendChild(firstClone);
+  slidesContainer.insertBefore(lastClone, originalSlides[0]);
+
+  // 2. Start at position 1 (the real first slide, after the prepended clone)
+  let position = 1; // real slides are at index 1 to total
+  slidesContainer.style.transition = 'none';
+  slidesContainer.style.transform = `translateX(-${position * 100}%)`;
+
+  function goToPosition(pos, animate = true) {
+    if (!animate) {
+      slidesContainer.style.transition = 'none';
+    } else {
+      slidesContainer.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+    }
+    slidesContainer.style.transform = `translateX(-${pos * 100}%)`;
+    position = pos;
+  }
+
+  function updateDots(realIndex) {
+    dots.forEach(d => d.classList.remove('active'));
+    if (dots[realIndex]) dots[realIndex].classList.add('active');
+  }
+
+  function nextSlide() {
+    if (isTransitioning) return;
+    isTransitioning = true;
+
+    goToPosition(position + 1);
+    current = (current + 1) % total;
+    updateDots(current);
+  }
+
+  // 3. After transition ends, silently jump if on a clone
+  slidesContainer.addEventListener('transitionend', () => {
+    isTransitioning = false;
+
+    // If on the last clone (clone of first) → jump to real first
+    if (position === total + 1) {
+      goToPosition(1, false);
+    }
+
+    // If on the first clone (clone of last) → jump to real last
+    if (position === 0) {
+      goToPosition(total, false);
+    }
+  });
+
+  // 4. Auto-advance every 2 seconds
+  setInterval(nextSlide, 2000);
+
+  // 5. Dot click support
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      current = i;
+      goToPosition(i + 1); // +1 because position 0 is the last clone
+      updateDots(current);
+    });
+  });
+
+  // Set first dot active on load
+  updateDots(0);
+}
+// =========================================
+// RESUME + CONTACT SECTION — CONCEPT 4
+// =========================================
+
+// Scroll reveal observer
+const rcSection = document.getElementById('resume-contact');
+if (rcSection) {
+  new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      rcSection.classList.toggle('in-view', entry.isIntersecting);
+    });
+  }, { threshold: 0.1 }).observe(rcSection);
+}
+
+// Terminal send handler
+function handleSend() {
+  const name = document.getElementById('t-name').value.trim();
+  const email = document.getElementById('t-email').value.trim();
+  const message = document.getElementById('t-message').value.trim();
+  const response = document.getElementById('t-response');
+
+  if (!name || !email || !message) {
+    response.style.color = '#E24B4A';
+    response.textContent = '> Error: all fields required. try again.';
+    response.classList.add('show');
+    return;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    response.style.color = '#E24B4A';
+    response.textContent = '> Error: invalid email format.';
+    response.classList.add('show');
+    return;
+  }
+
+  // Simulate sending
+  const btn = document.querySelector('.t-send-btn');
+  btn.textContent = './sending...';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    response.style.color = '#28c840';
+    response.textContent = `> Message sent successfully. Talk soon, ${name}. ✓`;
+    response.classList.add('show');
+    btn.textContent = './send_message.sh';
+    btn.disabled = false;
+
+    // Clear fields
+    document.getElementById('t-name').value = '';
+    document.getElementById('t-email').value = '';
+    document.getElementById('t-message').value = '';
+  }, 1500);
+}
+
+// Typing effect on terminal load
+const terminalLines = [
+  { el: '.t-output:nth-of-type(1)', delay: 300 },
+  { el: '.t-output:nth-of-type(2)', delay: 800 },
+];
+
+const rcObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const outputs = document.querySelectorAll('.t-output');
+      outputs.forEach((el, i) => {
+        el.style.opacity = '0';
+        setTimeout(() => {
+          el.style.transition = 'opacity 0.4s ease';
+          el.style.opacity = '1';
+        }, 400 + i * 500);
+      });
+      rcObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+if (rcSection) rcObserver.observe(rcSection);
