@@ -35,9 +35,9 @@ document.querySelectorAll("#mainNavLinks a").forEach(link => {
 
 // ============ TYPING ANIMATION ============
 const words = [
-  { text: '" What is done with ', color: '#f5ede0' },
-  { text: 'love', color: '#E8B84B' },
-  { text: ', is done well ."', color: '#f5ede0' }
+  { text: '" What is done with ', color: 'var(--text-primary)' },
+  { text: 'love', color: 'var(--accent-warm)' },
+  { text: ', is done well ."', color: 'var(--text-primary)' }
 ];
 
 const fullText = words.map(w => w.text).join('');
@@ -218,12 +218,13 @@ window.addEventListener('scroll', () => {
         const visible = Math.max(0, Math.min(window.innerHeight, rect.bottom) - Math.max(0, rect.top));
         if (visible > maxArea) { maxArea = visible; currentSection = section.id; }
       });
-      navEl.classList.remove('glass-home', 'glass-about', 'glass-resume');
+      navEl.classList.remove('glass-home', 'glass-about', 'glass-beyond', 'glass-resume');
       if (currentSection === 'home') navEl.classList.add('glass-home');
       else if (currentSection === 'about') navEl.classList.add('glass-about');
+      else if (currentSection === 'beyond') navEl.classList.add('glass-beyond');
       else if (currentSection === 'resume') navEl.classList.add('glass-resume');
     } else {
-      navEl.classList.remove('glass-home', 'glass-about', 'glass-resume');
+      navEl.classList.remove('glass-home', 'glass-about', 'glass-beyond', 'glass-resume');
     }
 
     // ---- ACTIVE NAV LINK ----
@@ -503,3 +504,65 @@ const rcObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.3 });
 
 if (rcSection) rcObserver.observe(rcSection);
+
+// ============ THEME TOGGLE ============
+function toggleTheme() {
+  bodyEl.classList.toggle('light-mode');
+  const isLight = bodyEl.classList.contains('light-mode');
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+
+  const icon = document.querySelector('.theme-icon');
+  if (icon) icon.textContent = isLight ? '🌙' : '☀️';
+
+  const profilePic = document.querySelector('.column.left img');
+  if (profilePic) {
+    profilePic.src = isLight ? 'image/cvpic3.png' : 'image/cvpic4.png';
+  }
+}
+
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light') {
+    document.body.classList.add('light-mode');
+    const icon = document.querySelector('.theme-icon');
+    if (icon) icon.textContent = '🌙';
+    const profilePic = document.querySelector('.column.left img');
+    if (profilePic) profilePic.src = 'image/cvpic3.png';
+  }
+})();
+// ============ FIREFLY EFFECT ============
+function createFireflies() {
+  const container = document.getElementById('home');
+  const count = 28;
+
+  for (let i = 0; i < count; i++) {
+    const fly = document.createElement('div');
+    fly.classList.add('firefly');
+
+    fly.style.left = `${Math.random() * 100}%`;
+    fly.style.top = `${Math.random() * 100}%`;
+
+    const size = 2 + Math.random() * 3;
+    fly.style.width = `${size}px`;
+    fly.style.height = `${size}px`;
+
+    const duration = 4 + Math.random() * 6;
+    const delay = Math.random() * 8;
+    fly.style.animationDuration = `${duration}s`;
+    fly.style.animationDelay = `${delay}s`;
+
+    // Unique random drift for each firefly
+    const x1 = (Math.random() - 0.5) * 140;
+    const y1 = (Math.random() - 0.5) * 140;
+    const x2 = (Math.random() - 0.5) * 100;
+    const y2 = (Math.random() - 0.5) * 80;
+
+    fly.style.setProperty('--x1', `${x1}px`);
+    fly.style.setProperty('--y1', `${y1}px`);
+    fly.style.setProperty('--x2', `${x2}px`);
+    fly.style.setProperty('--y2', `${y2}px`);
+
+    container.appendChild(fly);
+  }
+}
+createFireflies();
