@@ -957,6 +957,10 @@ body.light-mode .bird-9 path,
 body.light-mode .bird-10 path {
   stroke: #7a3a1066;
 }
+
+body:not(.light-mode) .birds-strip {
+  display: none;
+}
   /* Section Layout */
   .about-wrapper {
     border: 1px solid var(--border-accent);
