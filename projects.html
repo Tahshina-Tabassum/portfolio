@@ -21,6 +21,11 @@
     <aside class="left-panel">
       <a href="index.html" class="back-home-btn">← Portfolio</a>
 
+      <!-- Theme toggle (fixed position, always visible) -->
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+        <span class="theme-icon">☀️</span>
+      </button>
+
       <div class="panel-title">
         <h1>My<br><span class="accent">Projects</span></h1>
       </div>
@@ -117,6 +122,26 @@
     </main>
 
   </div>
+  <script>
+    // ===== THEME TOGGLE =====
+    function toggleTheme() {
+      document.body.classList.toggle('light-mode');
+      const isLight = document.body.classList.contains('light-mode');
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+      const icon = document.querySelector('.theme-icon');
+      if (icon) icon.textContent = isLight ? '🌙' : '☀️';
+    }
+
+    // Apply saved theme on load (shared with index.html)
+    (function () {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light') {
+        document.body.classList.add('light-mode');
+        const icon = document.querySelector('.theme-icon');
+        if (icon) icon.textContent = '🌙';
+      }
+    })();
+  </script>
 </body>
 
 </html>

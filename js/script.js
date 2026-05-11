@@ -565,7 +565,7 @@ function createFireflies() {
     fly.style.left = `${Math.random() * 100}%`;
     fly.style.top = `${Math.random() * 100}%`;
 
-    const size = 2 + Math.random() * 3;
+    const size = 5 + Math.random() * 3;
     fly.style.width = `${size}px`;
     fly.style.height = `${size}px`;
 

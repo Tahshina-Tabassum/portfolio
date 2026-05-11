@@ -2,6 +2,40 @@
 /* ======================  PROJECTS PAGE  ====================== */
 /* ============================================================= */
 
+/* ===== DARK MODE (default) ===== */
+:root {
+  --bg: #000000;
+  --bg-secondary: #0d0d0d;
+  --bg-tertiary: #111111;
+  --border: #2c2c2c;
+  --border-accent: #ff711322;
+  --text-primary: #f5ede0;
+  --text-secondary: #aaa;
+  --text-muted: #555;
+  --accent: #ff7113;
+  --accent-warm: #FFB300;
+  --card-bg: #0d0d0d;
+  --left-panel-bg: #000000;
+  --divider-opacity: 1;
+}
+
+/* ===== LIGHT MODE ===== */
+body.light-mode {
+  --bg: #ddb393;
+  --bg-secondary: #fdeed7;
+  --bg-tertiary: #fdf4e3;
+  --border: #ddd0c0;
+  --border-accent: #ff711344;
+  --text-primary: #1a1a1a;
+  --text-secondary: #555;
+  --text-muted: #484848;
+  --accent: #cc5500;
+  --accent-warm: #cc8800;
+  --card-bg: #fdf4e3;
+  --left-panel-bg: #fff5d0;
+  --divider-opacity: 0.85;
+}
+
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 html, body {
@@ -11,9 +45,10 @@ html, body {
 
 body {
   font-family: 'Playfair Display', serif;
-  background: #000;
-  color: #f5ede0;
+  background: var(--bg);
+  color: var(--text-primary);
   line-height: 1.6;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
 /* Decorative border frame */
@@ -21,11 +56,12 @@ body::before {
   content: "";
   position: fixed;
   top: 20px; left: 20px; right: 20px; bottom: 10px;
-  border: 1px solid #2c2c2c;
+  border: 1px solid var(--border);
   border-bottom: none;
   border-radius: 12px;
   pointer-events: none;
   z-index: 999;
+  transition: border-color 0.4s ease;
 }
 
 /* ============================================================= */
@@ -51,6 +87,8 @@ body::before {
   padding: 50px 24px 50px 60px;
   position: relative;
   overflow: hidden;
+  background: var(--left-panel-bg);
+  transition: background 0.4s ease;
 }
 
 .back-home-btn {
@@ -59,10 +97,10 @@ body::before {
   font-size: 13px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #888;
+  color: var(--text-secondary);
   text-decoration: none;
   padding: 8px 18px;
-  border: 1px solid #2c2c2c;
+  border: 1px solid var(--border);
   border-radius: 4px;
   width: fit-content;
   transition: all 0.3s ease;
@@ -71,7 +109,7 @@ body::before {
 }
 
 .back-home-btn:hover {
-  color: #FFB300;
+  color: var(--accent-warm);
   border-color: #ff711366;
 }
 
@@ -86,7 +124,7 @@ body::before {
   font-family: "Fredericka the Great", cursive;
   font-size: clamp(38px, 3.8vw, 62px);
   font-weight: 400;
-  color: #f5ede0;
+  color: var(--text-primary);
   line-height: 1.05;
   letter-spacing: 2px;
   text-align:right;
@@ -99,7 +137,7 @@ body::before {
 }
 
 .panel-title h1 .accent {
-   color: #ff7113;
+   color: var(--accent);
    }
 
 .panel-subtitle {
@@ -127,7 +165,7 @@ body::before {
 .panel-subtitle p {
   font-family: "Playfair Display", serif;
   font-size: 14px;
-  color: #777;
+  color: var(--text-secondary);
   line-height: 1.8;
   font-style: italic;
   max-width: 320px;
@@ -206,6 +244,8 @@ body::before {
   height: 100vh;
   padding: 36px 50px 36px 32px;
   overflow: hidden;
+  background: var(--bg);
+  transition: background 0.4s ease;
 }
 
 /* ============================================================= */
@@ -228,13 +268,13 @@ body::before {
 
 .project-card {
   position: relative;
-  background: #0d0d0d;
-  border: 1px solid #2c2c2c;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
   border-radius: 10px;
   overflow: hidden;
   height: 100%;
   cursor: pointer;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.4s ease;
   display: flex;
   flex-direction: column;
 }
@@ -327,7 +367,7 @@ body::before {
   font-family: "Playfair Display", serif;
   font-size: 18px;
   font-weight: 700;
-  color: #FFB300;
+  color: var(--accent-warm);
   margin-bottom: 6px;
   letter-spacing: 1px;
 }
@@ -340,6 +380,48 @@ body::before {
   max-width: 90%;
   margin: 0 auto;
   opacity: 0.85;
+}
+
+/* ============================================================= */
+/*                     THEME TOGGLE BUTTON                       */
+/* ============================================================= */
+
+.theme-toggle {
+  position: fixed;
+  top: 36px;
+  right: 52px;
+  z-index: 1000;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  transform: rotate(20deg);
+}
+
+/* Light mode divider tweak */
+body.light-mode .golden-divider {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #cc550022 8%,
+    #cc5500bb 30%,
+    #cc8800   50%,
+    #cc5500bb 70%,
+    #cc550022 92%,
+    transparent 100%
+  );
 }
 
 /* ============================================================= */
