@@ -61,8 +61,11 @@
   <a href="projects.html" class="custom-btn desktop-btn">Explore My Work</a>
 </div>
 
+<div class="mobile-controls">
+  <button class="theme-toggle mobile-toggle" onclick="toggleTheme()">
+    <span class="theme-icon">☀️</span>
+  </button>
 
-      <!-- Mobile hamburger + menu (unchanged) -->
       <button class="menu-btn" onclick="toggleMenu()">☰</button>
       <div class="nav-links" id="mainNavLinks">
         <a href="#home">HOME</a>
@@ -112,7 +115,7 @@
     </div>
   </section>
   <!-- ===== BIRDS TRANSITION ===== -->
-<<div class="birds-strip" aria-hidden="true">
+<div class="birds-strip" aria-hidden="true">
   <svg class="bird-svg bird-1" viewBox="0 0 40 20" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,10 Q10,0 20,10 Q30,0 40,10" fill="none" stroke="#ff9944" stroke-width="2" stroke-linecap="round"/>
   </svg>
@@ -487,8 +490,14 @@
   </section>
 
   <footer>
-    <p>&copy; 2025 Tahshina Tabassum</p>
-  </footer>
+  <div class="footer-inner">
+    <span class="footer-name">Tahshina Tabassum</span>
+    <span class="footer-divider">✦</span>
+    <span class="footer-copy">&copy; 2025 · All rights reserved</span>
+    <span class="footer-divider">✦</span>
+    <span class="footer-tagline">Designed & Built with love</span>
+  </div>
+</footer>
   <script src="js/script.js"></script>
 </body>
 

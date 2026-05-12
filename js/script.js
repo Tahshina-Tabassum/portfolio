@@ -71,11 +71,8 @@ function type() {
     index++;
     setTimeout(type, typingSpeed);
 } else {
-  const scrolled = window.scrollY;
-  const sectionHeight = homeSection ? homeSection.offsetHeight : 0;
-  const triggerStart = sectionHeight * 0.15;
-  
-  if (!transformDone && scrolled < triggerStart && authorEl) {
+  // Typing done — always reveal the author with a smooth fade
+  if (authorEl) {
     authorEl.style.transition = 'opacity 1.5s ease-in-out';
     authorEl.style.opacity = '1';
   }
@@ -242,7 +239,7 @@ window.addEventListener('scroll', () => {
     // ---- HOME TRANSITION ----
     if (homeSection) {
       const sectionHeight = homeSection.offsetHeight;
-      const start = sectionHeight * 0.02;
+      const start = sectionHeight * 0.01;
       const end = sectionHeight * 0.28;
       const progress = Math.min(1, Math.max(0, (scrolled - start) / (end - start)));
 
@@ -266,7 +263,7 @@ window.addEventListener('scroll', () => {
       }
 
       // Intro floats up in second half
-      const introP = Math.min(1, Math.max(0, (progress - 0.4) / 0.6));
+      const introP = Math.min(1, Math.max(0, (progress - 0.4) / 0.2));
       if (introOverlay) {
         if (introP > 0) {
           introOverlay.style.visibility = 'visible';
@@ -534,8 +531,7 @@ function toggleTheme() {
   const isLight = bodyEl.classList.contains('light-mode');
   localStorage.setItem('theme', isLight ? 'light' : 'dark');
 
-  const icon = document.querySelector('.theme-icon');
-  if (icon) icon.textContent = isLight ? '🌙' : '☀️';
+ document.querySelectorAll('.theme-icon').forEach(icon => icon.textContent = isLight ? '🌙' : '☀️');
 
   const profilePic = document.querySelector('.column.left img');
   if (profilePic) {
@@ -547,8 +543,7 @@ function toggleTheme() {
   const saved = localStorage.getItem('theme');
   if (saved === 'light') {
     document.body.classList.add('light-mode');
-    const icon = document.querySelector('.theme-icon');
-    if (icon) icon.textContent = '🌙';
+    document.querySelectorAll('.theme-icon').forEach(icon => icon.textContent = '🌙');
     const profilePic = document.querySelector('.column.left img');
     if (profilePic) profilePic.src = 'image/cvpic3.png';
   }
@@ -565,7 +560,7 @@ function createFireflies() {
     fly.style.left = `${Math.random() * 100}%`;
     fly.style.top = `${Math.random() * 100}%`;
 
-    const size = 5 + Math.random() * 3;
+    const size = 5 + Math.random() * 6;
     fly.style.width = `${size}px`;
     fly.style.height = `${size}px`;
 
