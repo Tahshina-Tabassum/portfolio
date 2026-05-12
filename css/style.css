@@ -366,7 +366,7 @@ body.light-mode .custom-btn:hover {
 
 
 .menu-btn {
-  font-size: 30px;
+  font-size: 20px;
   background: none;
   border: none;
   cursor: pointer;
@@ -374,20 +374,27 @@ body.light-mode .custom-btn:hover {
   margin-top: 0px;
   margin-right: -20px;
 }
+.main-nav {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
 
+.mobile-controls {
+  display: none;
+}
 /* Always hidden nav links */
 #mainNavLinks {
   max-height: 0;
   position: absolute;
   top: 60px;
-  /* below the button */
   right: 0;
-  background:  rgba(20, 10, 5, 0.95);
-  /* transparent white */
+  background:  rgb(26, 10, 2);
   backdrop-filter: blur(10px);
-  /* glass blur effect */
   -webkit-backdrop-filter: blur(10px);
-  /* Safari support */
   border-bottom: none;
   border-radius: 8px;
   overflow: hidden;
@@ -406,13 +413,15 @@ body.light-mode .custom-btn:hover {
 
 
 #mainNavLinks a {
+  font-family:sans;
   padding: 10px 20px;
   color: var(--text-primary);
   text-decoration: none;
-  font-weight: bold;
+  font-weight:400;
   transform: translateY(-10px);
   opacity: 0;
   transition: all 0.3s ease, transform 0.3s ease;
+  font-size: 9px;
   ;
 }
 @media (max-width: 1024px) {
@@ -420,7 +429,6 @@ body.light-mode .custom-btn:hover {
     top: 0;
     left: 0;
     margin: 10px 20px;
-    font-size: 14px;
     padding: 10px 20px;
     width: calc(100% - 40px);
     text-align: center;
@@ -2736,18 +2744,7 @@ footer {
   }
 }
 
-..main-nav {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-}
 
-.mobile-controls {
-  display: none;
-}
 
 @media (max-width: 1024px) {
   .text-logo {
