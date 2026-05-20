@@ -200,6 +200,7 @@ window.addEventListener('scroll', () => {
   requestAnimationFrame(() => {
     rafPending = false;
     const scrolled = window.scrollY;
+    const isMobile = window.innerWidth <= 768;
 
     // ---- NAV scrolled class ----
     navEl.classList.toggle('scrolled', scrolled > 50);
@@ -243,94 +244,108 @@ window.addEventListener('scroll', () => {
       const end = sectionHeight * 0.28;
       const progress = Math.min(1, Math.max(0, (scrolled - start) / (end - start)));
 
-      // Quote fades out completely
-      if (quoteH2) quoteH2.style.opacity = `${Math.max(0, 1 - progress *4)}`;
-      if (authorEl) authorEl.style.opacity = `${Math.max(0, 1 - progress * 10)}`;
+      if (isMobile) {
+        // ---- MOBILE: simplified transition (no translateX, no size changes) ----
 
-      // Divider shrinks
-      if (dividerEl) dividerEl.style.height = `${500 - progress * 280}px`;
+        // Quote fades out
+        if (quoteH2) quoteH2.style.opacity = `${Math.max(0, 1 - progress * 4)}`;
+        if (authorEl) authorEl.style.opacity = `${Math.max(0, 1 - progress * 10)}`;
 
-      // Images crossfade in first 60%
-      const imgP = Math.min(1, progress / 0.4);
-      if (imgPrimary) imgPrimary.style.opacity = `${1 - imgP}`;
-      if (imgSecondary) {
-        imgSecondary.style.opacity = `${imgP}`;
-        imgSecondary.style.maxWidth = `${400 + imgP * 300}px`;
-        imgSecondary.style.height = imgP > 0 ? `${30 + imgP * 55}vh` : 'auto';
-        imgSecondary.style.objectFit = 'cover';
-        imgSecondary.style.objectPosition = 'center';
-        imgSecondary.style.transform = `translateX(${-imgP * 150}px)`;
-      }
+        // Images crossfade
+        const imgP = Math.min(1, progress / 0.4);
+        if (imgPrimary) imgPrimary.style.opacity = `${1 - imgP}`;
+        if (imgSecondary) {
+          imgSecondary.style.opacity = `${imgP}`;
+        }
 
-      // Intro floats up in second half
-      const introP = Math.min(1, Math.max(0, (progress - 0.4) / 0.2));
-      if (introOverlay) {
-        if (introP > 0) {
-          introOverlay.style.visibility = 'visible';
-          introOverlay.style.height = 'auto';
-          introOverlay.style.overflow = 'visible';
-          introOverlay.style.opacity = `${introP}`;
-          introOverlay.style.transform = `translateY(${60 - introP * 60}px)`;
-          introOverlay.style.pointerEvents = introP > 0.8 ? 'all' : 'none';
+        // Intro floats up
+        const introP = Math.min(1, Math.max(0, (progress - 0.4) / 0.2));
+        if (introOverlay) {
+          if (introP > 0) {
+            introOverlay.style.opacity = `${introP}`;
+            introOverlay.style.transform = `translateY(${30 - introP * 30}px)`;
+            introOverlay.style.pointerEvents = introP > 0.8 ? 'all' : 'none';
+          } else {
+            introOverlay.style.opacity = '0';
+            introOverlay.style.transform = 'translateY(30px)';
+            introOverlay.style.pointerEvents = 'none';
+          }
+        }
+
+        // Lock at progress = 1
+        if (progress >= 1) {
+          if (quoteWrapper) quoteWrapper.style.display = 'none';
+          if (imgPrimary) imgPrimary.style.opacity = '0';
+          if (imgSecondary) imgSecondary.style.opacity = '1';
+          if (introOverlay) {
+            introOverlay.style.opacity = '1';
+            introOverlay.style.transform = 'translateY(0)';
+          }
         } else {
-          introOverlay.style.visibility = 'hidden';
-          introOverlay.style.height = '0';
-          introOverlay.style.overflow = 'hidden';
-          introOverlay.style.opacity = '0';
-          introOverlay.style.transform = 'translateY(60px)';
-          introOverlay.style.pointerEvents = 'none';
+          if (quoteWrapper) quoteWrapper.style.display = 'flex';
+        }
+
+      } else {
+        // ---- DESKTOP: full parallax transition ----
+
+        // Quote fades out completely
+        if (quoteH2) quoteH2.style.opacity = `${Math.max(0, 1 - progress * 4)}`;
+        if (authorEl) authorEl.style.opacity = `${Math.max(0, 1 - progress * 10)}`;
+
+        // Divider shrinks
+        if (dividerEl) dividerEl.style.height = `${500 - progress * 280}px`;
+
+        // Images crossfade in first 60%
+        const imgP = Math.min(1, progress / 0.4);
+        if (imgPrimary) imgPrimary.style.opacity = `${1 - imgP}`;
+        if (imgSecondary) {
+          imgSecondary.style.opacity = `${imgP}`;
+          imgSecondary.style.maxWidth = `${400 + imgP * 300}px`;
+          imgSecondary.style.height = imgP > 0 ? `${30 + imgP * 55}vh` : 'auto';
+          imgSecondary.style.objectFit = 'cover';
+          imgSecondary.style.objectPosition = 'center';
+          imgSecondary.style.transform = `translateX(${-imgP * 150}px)`;
+        }
+
+        // Intro floats up in second half
+        const introP = Math.min(1, Math.max(0, (progress - 0.4) / 0.2));
+        if (introOverlay) {
+          if (introP > 0) {
+            introOverlay.style.visibility = 'visible';
+            introOverlay.style.height = 'auto';
+            introOverlay.style.overflow = 'visible';
+            introOverlay.style.opacity = `${introP}`;
+            introOverlay.style.transform = `translateY(${60 - introP * 60}px)`;
+            introOverlay.style.pointerEvents = introP > 0.8 ? 'all' : 'none';
+          } else {
+            introOverlay.style.visibility = 'hidden';
+            introOverlay.style.height = '0';
+            introOverlay.style.overflow = 'hidden';
+            introOverlay.style.opacity = '0';
+            introOverlay.style.transform = 'translateY(60px)';
+            introOverlay.style.pointerEvents = 'none';
+          }
+        }
+
+        // Lock at progress = 1
+        if (progress >= 1) {
+          if (quoteWrapper) quoteWrapper.style.display = 'none';
+          if (imgPrimary) imgPrimary.style.opacity = '0';
+          if (imgSecondary) {
+            imgSecondary.style.opacity = '1';
+            imgSecondary.style.maxWidth = '700px';
+            imgSecondary.style.height = '85vh';
+            imgSecondary.style.transform = 'translateX(-150px)';
+          }
+          if (introOverlay) {
+            introOverlay.style.visibility = 'visible';
+            introOverlay.style.opacity = '1';
+            introOverlay.style.transform = 'translateY(0)';
+          }
+        } else {
+          if (quoteWrapper) quoteWrapper.style.display = 'flex';
         }
       }
-
-      // Lock at progress = 1
-      // if (progress >= 1) {
-      //   transformDone = true;
-
-      //   if (quoteWrapper) quoteWrapper.style.display = 'none';
-      //   if (authorEl) authorEl.style.display = 'none';
-      //   if (dividerEl) dividerEl.style.height = '220px';
-      //   if (imgPrimary) imgPrimary.style.opacity = '0';
-      //   if (imgSecondary) {
-      //     imgSecondary.style.opacity = '1';
-      //     imgSecondary.style.maxWidth = '700px';
-      //     imgSecondary.style.height = '85vh';
-      //     imgSecondary.style.objectFit = 'cover';
-      //     imgSecondary.style.objectPosition = 'center';
-      //     imgSecondary.style.transform = 'translateX(-150px)'; 
-      //   }
-
-      //   if (introOverlay) {
-      //     introOverlay.style.visibility = 'visible';
-      //     introOverlay.style.height = 'auto';
-      //     introOverlay.style.overflow = 'visible';
-      //     introOverlay.style.opacity = '1';
-      //     introOverlay.style.transform = 'translateY(0)';
-      //     introOverlay.style.pointerEvents = 'all';
-      //   }
-      // }
-      if (progress >= 1) {
-
-  if (quoteWrapper) quoteWrapper.style.display = 'none';
-
-  if (imgPrimary) imgPrimary.style.opacity = '0';
-
-  if (imgSecondary) {
-    imgSecondary.style.opacity = '1';
-    imgSecondary.style.maxWidth = '700px';
-    imgSecondary.style.height = '85vh';
-    imgSecondary.style.transform = 'translateX(-150px)';
-  }
-
-  if (introOverlay) {
-    introOverlay.style.visibility = 'visible';
-    introOverlay.style.opacity = '1';
-    introOverlay.style.transform = 'translateY(0)';
-  }
-
-} else {
-
-  if (quoteWrapper) quoteWrapper.style.display = 'flex';
-}
     }
   });
 }, { passive: true });
