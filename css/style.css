@@ -2931,33 +2931,44 @@ footer {
 
   .image_part {
     width: 100%;
-    height: 200px;
+    min-height: 260px;
+    height: auto;
     position: relative;
     padding-left: 0;
     margin-left: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    margin-top: -18px;
+    display: grid;
+    place-items: center;
+    overflow: visible;
   }
 
   .image_part img {
-    position: absolute !important;
-    max-width: 200px !important;
-    width: auto !important;
+    grid-area: 1 / 1;
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    width: min(78vw, 240px) !important;
+    max-width: 240px !important;
+    max-height: 240px !important;
     height: auto !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
+    object-fit: contain;
     margin: 0 !important;
+    justify-self: center;
+    align-self: center;
   }
 
   .img-secondary {
     opacity: 0;
-    max-width: 200px !important;
+    grid-area: 1 / 1;
+    width: min(78vw, 240px) !important;
+    max-width: 240px !important;
+    max-height: 240px !important;
     height: auto !important;
-    transform: translate(-50%, -50%) !important;
+    transform: none !important;
+    object-fit: contain;
+    justify-self: center;
+    align-self: center;
   }
 
   /* --- BIRDS --- */
